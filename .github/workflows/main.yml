@@ -22,10 +22,13 @@ jobs:
         unzip $filename
         sudo mv terraform /usr/local/bin 
         rm -f $filename
+        sudo ls -l /usr/local/bin
 
     - name: start up GCP instances
+      env:
+        my_secret: ${{ secrets.GCP_CREDENTIAL }}
       run: |
-        export GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GCP_CREDENTIAL }}
+        export GOOGLE_APPLICATION_CREDENTIALS=$my_secret
         terraform init && terraform apply
 
 #    # this step could be a part of the above step
