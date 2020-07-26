@@ -42,8 +42,9 @@ jobs:
         path: |
           /usr/local/bin/terraform
           ~/.terraform
-          terraform*
+          terraform.tfstate
           main.tf
+          terraform.*
         key: ${{ runner.os }}-terraform
 
   # This job is already defined for ci-test-weather
@@ -68,6 +69,8 @@ jobs:
 
     steps:
     - name: destroy GCP instances
+      env:
+        my_secret: ${{ secrets.GCP_CREDENTIAL }}
       run: |
         ls -alh
         echo $my_secret >temp
