@@ -1,0 +1,66 @@
+name: gha-gcp test
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  setup:
+    name: Start and set up GCP instances
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: install terraform
+      run: |
+        url=https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
+        filename=$(basename $url)
+        curl -LORSsf $url
+        unzip $filename
+        sudo mv ${filename%.zip} /usr/local/bin 
+        rm -f $filename
+
+    - name: start up GCP instances
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GCP_CREDENTIAL }}
+        terraform init && terraform apply
+
+#    # this step could be a part of the above step
+#    - name: set up GCP instances
+#      ./setup_infrastructure.sh
+
+    - name: cache terraform related files
+      uses: actions/cache@v2
+      with:
+        path: |
+          /usr/local/bin/terraform
+          ~/.terraform
+          terraform*
+        key: ${{ runner.os }}-terraform
+
+  # This job is already defined for ci-test-weather
+  tests:
+    name: Run tests on GCP
+    needs: setup
+    runs-on: self-hosted
+
+    steps:
+    - name: Sleep
+      run: sleep 600
+
+  stop:
+    # make sure all tests have finished and then destroy all instances
+    # do i need to check out (i.e. do I need main.tf just to run terraform destroy)?
+    # probably, since we need the terraform state file from the setup step
+    # use cached terraform files?
+    # Again, needs GCP credential
+    name: Destroy GCP instances
+    needs: tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: destroy GCP instances
+      run: terraform destroy
