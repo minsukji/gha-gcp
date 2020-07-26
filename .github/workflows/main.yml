@@ -43,13 +43,14 @@ jobs:
           /usr/local/bin/terraform
           .terraform
           terraform.tfstate*
+          main.tf
         key: ${{ runner.os }}-terraform
 
-    - name: upload terraform related files
-      uses: actions/upload-artifact@v2
-      with:
-        name: main.tf
-        path: main.tf
+#    - name: upload terraform related files
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: main.tf
+#        path: main.tf
 
   # This job is already defined for ci-test-weather
   tests:
@@ -72,10 +73,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: download terraform related files
-      uses: actions/download-artifact@v2
-      with:
-        name: main.tf
+#    - name: download terraform related files
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: main.tf
 
     - name: destroy GCP instances
       env:
