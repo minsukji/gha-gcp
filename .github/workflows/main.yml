@@ -45,7 +45,7 @@ jobs:
   tests:
     name: Run tests on GCP
     needs: setup
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Sleep
