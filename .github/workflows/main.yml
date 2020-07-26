@@ -20,7 +20,7 @@ jobs:
         filename=$(basename $url)
         curl -LORSsf $url
         unzip $filename
-        sudo mv ${filename%.zip} /usr/local/bin 
+        sudo mv terraform /usr/local/bin 
         rm -f $filename
 
     - name: start up GCP instances
