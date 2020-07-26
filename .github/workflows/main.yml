@@ -54,7 +54,7 @@ jobs:
 
     steps:
     - name: Sleep
-      run: sleep 240
+      run: sleep 180
 
   stop:
     # make sure all tests have finished and then destroy all instances
@@ -70,4 +70,6 @@ jobs:
     - name: destroy GCP instances
       run: |
         ls -alh
+        echo $my_secret >temp
+        export GOOGLE_APPLICATION_CREDENTIALS="temp"
         terraform destroy -auto-approve
