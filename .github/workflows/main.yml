@@ -28,7 +28,11 @@ jobs:
       env:
         my_secret: ${{ secrets.GCP_CREDENTIAL }}
       run: |
-        export GOOGLE_APPLICATION_CREDENTIALS=$my_secret
+        touch temp
+        cat $my_secret
+        cat $my_secret > temp
+        cat temp
+        export GOOGLE_APPLICATION_CREDENTIALS="temp"
         terraform init && terraform apply
 
 #    # this step could be a part of the above step
