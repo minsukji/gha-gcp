@@ -53,7 +53,7 @@ jobs:
 
     steps:
     - name: Sleep
-      run: sleep 600
+      run: sleep 240
 
   stop:
     # make sure all tests have finished and then destroy all instances
@@ -67,4 +67,4 @@ jobs:
 
     steps:
     - name: destroy GCP instances
-      run: terraform destroy
+      run: terraform destroy -auto-approve
