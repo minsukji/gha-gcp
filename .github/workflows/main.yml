@@ -41,8 +41,8 @@ jobs:
       with:
         path: |
           /usr/local/bin/terraform
-          ~/.terraform
-          ~/terraform.tfstate*
+          .terraform
+          terraform.tfstate*
         key: ${{ runner.os }}-terraform
 
     - name: upload terraform related files
