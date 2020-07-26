@@ -30,7 +30,7 @@ jobs:
       run: |
         echo $my_secret >temp
         export GOOGLE_APPLICATION_CREDENTIALS="temp"
-        terraform init && terraform apply
+        terraform init && terraform apply -auto-approve
 
 #    # this step could be a part of the above step
 #    - name: set up GCP instances
