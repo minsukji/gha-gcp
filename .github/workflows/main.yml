@@ -43,6 +43,7 @@ jobs:
           /usr/local/bin/terraform
           ~/.terraform
           terraform*
+          main.tf
         key: ${{ runner.os }}-terraform
 
   # This job is already defined for ci-test-weather
@@ -67,4 +68,6 @@ jobs:
 
     steps:
     - name: destroy GCP instances
-      run: terraform destroy -auto-approve
+      run: |
+        ls -alh
+        terraform destroy -auto-approve
