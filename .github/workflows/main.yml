@@ -82,6 +82,6 @@ jobs:
         my_secret: ${{ secrets.GCP_CREDENTIAL }}
       run: |
         ls -alh
-        echo $my_secret >temp
-        export GOOGLE_APPLICATION_CREDENTIALS="temp"
+        #echo $my_secret >temp
+        #export GOOGLE_APPLICATION_CREDENTIALS="temp"
         terraform destroy -auto-approve
